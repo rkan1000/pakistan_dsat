@@ -1,6 +1,8 @@
 ---
 title: "pakistan"
-output: html_document
+output:
+  md_document:
+    variant: gfm # github format
 ---
 
 ```{r open-libaries}
@@ -19,7 +21,7 @@ write_csv(excel_data, "data/dsat_research.csv")
 dsat <- read_csv("data/dsat_research.csv")
 ```
 
-```{r}
+```{r pakistan-history}
 pakistan_history <- dsat %>%
   filter(AimPointCountry_Agg == "Pakistan")
 chinese_attacked_pakistan <- pakistan_history %>%
