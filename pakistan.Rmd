@@ -1,0 +1,83 @@
+---
+title: "pakistan"
+output: html_document
+---
+
+```{r open-libaries}
+library("readr")
+library("readxl")
+library("tidyverse")
+```
+
+```{r}
+excel_data <- read_excel("data/dsat_through_2024.xlsx", sheet = "tblAggregation_Attacks_QTA")
+write_csv(excel_data, "data/dsat_research.csv")
+```
+
+
+```{r creation-dsat-csv}
+dsat <- read_csv("data/dsat_research.csv")
+```
+
+```{r}
+pakistan_history <- dsat %>%
+  filter(AimPointCountry_Agg == "Pakistan")
+chinese_attacked_pakistan <- pakistan_history %>%
+  filter(TT_Nationality == "Chinese")
+```
+
+```{r total-attacks-2023}
+attacks_2023 <- dsat %>%
+  filter(AttackYear == 2023, AimPointCountry_Agg == "Pakistan") 
+attacks_2024 <- dsat %>%
+  filter(AttackYear == 2024, AimPointCountry_Agg == "Pakistan")
+```
+
+```{r total-attacks-against-Chinese}
+chinese_attacked_outside_china <- dsat %>%
+  filter(AimPointCountry_Agg != "China", TT_Nationality == "Chinese") 
+ggplot(chinese_attacked_outside_china, aes(x = AimPointCountry_Agg, fill = AimPointCountry_Agg)) +
+  geom_bar() +
+  labs(
+    title = "Number of Attacks Against Chinese",
+    x = "Country Attacked"
+  )
+```
+
+```{r balochistan-liberation-army}
+bla_attacks <- dsat %>%
+  filter(Claimed_Agg2 == "Balochistan Liberation Army")
+
+ggplot(bla_attacks, aes(x = AttackYear, fill = TT_Nationality)) +
+  geom_bar() + 
+  labs(
+    title = "History of Balochistan Liberation Army Attacks",
+    x = "Year of Attack", y = "Number of Attacks"
+  )
+```
+
+
+```{r pakistan-attacks-over-time}
+pakistan_yearly_summary <- pakistan_history %>%
+  group_by(AttackYear) %>%
+  summarize(attack = n())
+# visualization
+ggplot(pakistan_yearly_summary, aes(x = AttackYear, y = attack)) +
+  geom_line() + 
+  labs(
+    title = "Attacks per year in Pakistan, 1995-2024",
+    x = "Year of Attack", y = "Quantity of Attacks"
+  ) +
+  theme_bw()
+```
+
+```{r pakistan-aggregate-attacker}
+pakistan_aggregate_attacker <- pakistan_history %>%
+  group_by(AttackYear, Claimed_Agg2) %>%
+  summarize(attack = n())
+##visualization:
+ggplot(pakistan_aggregate_attacker, aes(x = AttackYear, y = attack, group = Claimed_Agg2)) +
+  geom_line()
+```
+
+
