@@ -70,7 +70,7 @@ ggplot(bla_attacks, aes(x = AttackYear, fill = TT_Nationality)) +
   labs(
     title = "History of Balochistan Liberation Army Attacks",
     x = "Year of Attack", y = "Number of Attacks"
-  )
+  ) #plot against region?
 ```
 
 ![](README_files/figure-gfm/balochistan-liberation-army-1.png)<!-- -->
@@ -99,11 +99,3 @@ pakistan_aggregate_attacker <- pakistan_history %>%
 
     ## `summarise()` has grouped output by 'AttackYear'. You can override using the
     ## `.groups` argument.
-
-``` r
-##visualization:
-ggplot(pakistan_aggregate_attacker, aes(x = AttackYear, y = attack, group = Claimed_Agg2)) +
-  geom_line()
-```
-
-![](README_files/figure-gfm/pakistan-aggregate-attacker-1.png)<!-- -->

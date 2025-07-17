@@ -17,6 +17,27 @@ write_csv(excel_data, "data/dsat_research.csv")
 ```
 
 
+REMEMBER TO RECREATE EVERYTHING!!! perhaps also make a flow chart... 
+
+But at any rate:
+
+Explain strategic logic of suicide terrorism.
+
+Clean data.
+
+Then: visualizations:
+
+First: a flow chart on what the current thingies are
+
+1. TTP vs BLA over time
+2. Geographic data of BLA attacks
+3. textual analysis of both claim texts and comparison
+4. (probably earlier) Pakistan attacks over time
+5. BLA attacks against Chinese over time
+6. Perhaps Chinese-specific attacks not in China
+7. Final flow chart of potential revised theory
+8. MAYBE EVEN a death chart -- showing the IMPORTANCE of understanding these attacks
+
 ```{r creation-dsat-csv}
 dsat <- read_csv("data/dsat_research.csv")
 ```
@@ -55,7 +76,7 @@ ggplot(bla_attacks, aes(x = AttackYear, fill = TT_Nationality)) +
   labs(
     title = "History of Balochistan Liberation Army Attacks",
     x = "Year of Attack", y = "Number of Attacks"
-  )
+  ) #plot against region?
 ```
 
 
@@ -77,9 +98,6 @@ ggplot(pakistan_yearly_summary, aes(x = AttackYear, y = attack)) +
 pakistan_aggregate_attacker <- pakistan_history %>%
   group_by(AttackYear, Claimed_Agg2) %>%
   summarize(attack = n())
-##visualization:
-ggplot(pakistan_aggregate_attacker, aes(x = AttackYear, y = attack, group = Claimed_Agg2)) +
-  geom_line()
 ```
 
 
